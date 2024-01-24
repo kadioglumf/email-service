@@ -36,7 +36,7 @@ email-service:
   redis:
     host: localhost
     port: 6379
-    password: a4rT44Rce32w87htRft56
+    password: Test123
     database: 1
   jwt:
     access-token-secret: PyPNRM8C0ia4uOGfxqPD5DTbWC6j9TWvPStp9lb7ARo0oK2mJ3pd3KL9pxA9i8bj12TbadgezxgeEByY
