@@ -3,9 +3,12 @@ package com.kadioglumf.email.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.sql.Types;
 
 @Entity
 @Table(name = "email_template_common_placeholder",
@@ -21,7 +24,7 @@ public class EmailTemplateCommonPlaceHoldersModel extends DeviceDetailedAbstract
     @Column(nullable = false, updatable = false)
     private String code;
     @Lob
-    @Type(type = "org.hibernate.type.TextType")
+    @JdbcTypeCode(Types.LONGVARCHAR)
     private String value;
 
     @Convert(converter = LanguageTypeConverter.class)

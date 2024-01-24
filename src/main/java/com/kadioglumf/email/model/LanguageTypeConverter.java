@@ -1,7 +1,7 @@
 package com.kadioglumf.email.model;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 @Converter
 public class LanguageTypeConverter implements AttributeConverter<LanguageType, String> {

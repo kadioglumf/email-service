@@ -2,9 +2,12 @@ package com.kadioglumf.email.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.sql.Types;
 
 @Data
 @NoArgsConstructor
@@ -18,15 +21,15 @@ public class EmailLogModel extends DeviceDetailedAbstractModel {
     
     private String email;
     @Lob
-    @Type(type = "org.hibernate.type.TextType")
+    @JdbcTypeCode(Types.LONGVARCHAR)
     private String request;
 
     @Lob
-    @Type(type = "org.hibernate.type.TextType")
+    @JdbcTypeCode(Types.LONGVARCHAR)
     private String exceptionMessage;
 
     @Lob
-    @Type(type = "org.hibernate.type.TextType")
+    @JdbcTypeCode(Types.LONGVARCHAR)
     private String exceptionStackTrace;
     private String className;
     private String methodName;

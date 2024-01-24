@@ -1,11 +1,19 @@
 package com.kadioglumf.email.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import java.sql.Types;
 
 @Entity
 @Table(name = "email_template",
@@ -23,7 +31,7 @@ public class EmailTemplateModel extends DeviceDetailedAbstractModel {
 
     @Column(nullable = false)
     @Lob
-    @Type(type = "org.hibernate.type.TextType")
+    @JdbcTypeCode(Types.LONGVARCHAR)
     private String content;
 
     private String subject;

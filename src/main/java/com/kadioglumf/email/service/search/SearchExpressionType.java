@@ -4,8 +4,8 @@ import com.kadioglumf.email.exception.EmailServiceException;
 import com.kadioglumf.email.payload.response.error.ErrorType;
 import org.springframework.util.CollectionUtils;
 
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Root;
 import java.util.HashMap;
 import java.util.List;
 

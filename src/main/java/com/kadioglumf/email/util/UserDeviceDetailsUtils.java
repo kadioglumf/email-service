@@ -4,7 +4,7 @@ import com.kadioglumf.email.model.EIpType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public class UserDeviceDetailsUtils {

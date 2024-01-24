@@ -10,12 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
+
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class AuthProviderService {
     private String jwtAccessTokenSecret;
     @Value("${email-service.jwt.expiration-ms.access-token}")
     private int jwtAccessTokenExpirationMs;
-    private Key key;
+    private SecretKey key;
 
     @PostConstruct
     public void init() {
@@ -40,10 +41,10 @@ public class AuthProviderService {
     public String generateJwtToken(UserDetailsImpl userPrincipal) {
         String authorities = userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
         return Jwts.builder()
-                .setSubject((userPrincipal.getEmail()))
+                .subject((userPrincipal.getEmail()))
                 .claim(AUTHORITIES_KEY, authorities)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtAccessTokenExpirationMs))
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtAccessTokenExpirationMs))
                 .signWith(key)
                 .compact();
     }
@@ -51,7 +52,7 @@ public class AuthProviderService {
     public String getEmailFromJwtToken(String token) {
         if (StringUtils.hasText(token) && token.startsWith("Bearer "))
             token = token.substring(7);
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();
     }
 
     public String removeBearerFromToken(String authToken) {
@@ -63,7 +64,7 @@ public class AuthProviderService {
     public boolean validateJwtToken(String authToken) {
         authToken = removeBearerFromToken(authToken);
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken);
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(authToken);
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());

@@ -1,23 +1,12 @@
 package com.kadioglumf.email.controller;
 
 import com.kadioglumf.email.payload.request.auth.LoginRequest;
-import com.kadioglumf.email.payload.request.emailtemplate.EmailCommonPlaceHoldersRequest;
-import com.kadioglumf.email.payload.request.emailtemplate.EmailTemplateRequest;
-import com.kadioglumf.email.payload.request.search.SearchRequest;
-import com.kadioglumf.email.payload.response.EmailTemplatePlaceHolderResponse;
-import com.kadioglumf.email.payload.response.EmailTemplateResponse;
 import com.kadioglumf.email.payload.response.auth.JwtResponse;
 import com.kadioglumf.email.security.AuthProviderService;
 import com.kadioglumf.email.security.UserDetailsImpl;
-import com.kadioglumf.email.service.email.EmailTemplateService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +24,7 @@ import java.util.stream.Collectors;
 @Validated
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
+    private final AuthenticationProvider authenticationManager;
     private final AuthProviderService tokenManager;
 
     @PostMapping("/login")
