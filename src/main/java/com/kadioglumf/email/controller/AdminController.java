@@ -1,5 +1,7 @@
 package com.kadioglumf.email.controller;
 
+import com.kadioglumf.email.common.SwaggerLocalization;
+import com.kadioglumf.email.common.annotations.CommonSwaggerApiResponses;
 import com.kadioglumf.email.payload.request.emailtemplate.EmailCommonPlaceHoldersRequest;
 import com.kadioglumf.email.payload.request.emailtemplate.EmailTemplateRequest;
 import com.kadioglumf.email.payload.request.search.SearchRequest;
@@ -27,8 +29,15 @@ public class AdminController {
     private final EmailTemplateService emailTemplateService;
 
     @PostMapping("template/createOrUpdate")
-    @ApiOperation(value = "Create Email Template", authorizations = {@Authorization(value = "JWT_LOGIN")})
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    @ApiOperation(
+            nickname = SwaggerLocalization.NICKNAME_TEMPLATE_CREATE_OR_UPDATE,
+            value = SwaggerLocalization.VALUE_TEMPLATE_CREATE_OR_UPDATE,
+            authorizations = {@Authorization(value = "JWT_LOGIN")},
+            notes = SwaggerLocalization.NOTES_TEMPLATE_CREATE_OR_UPDATE,
+            produces = SwaggerLocalization.SWAGGER_JSON_XML,
+            consumes = SwaggerLocalization.SWAGGER_JSON_XML)
+    @CommonSwaggerApiResponses
     public ResponseEntity<Void> saveOrUpdateTemplate(@Valid @RequestBody EmailTemplateRequest request) {
         emailTemplateService.saveOrUpdateTemplate(request);
         return new ResponseEntity<>(HttpStatus.OK);
